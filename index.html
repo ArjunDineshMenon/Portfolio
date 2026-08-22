@@ -1,0 +1,561 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#0B0E23" />
+
+<title>Arjun Dinesh Menon · Cloud &amp; DevOps</title>
+<meta name="description" content="Arjun Dinesh Menon. First-year AI and Data Science student at KGiSL Institute of Technology, Coimbatore, building cloud infrastructure on real AWS and working toward a Cloud and DevOps career in Japan." />
+<meta name="author" content="Arjun Dinesh Menon" />
+<link rel="canonical" href="https://arjundineshmenon.com/" />
+
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Arjun Dinesh Menon · Cloud &amp; DevOps" />
+<meta property="og:description" content="Nothing I build stops at localhost. Cloud infrastructure, DevOps, and a route to Japan." />
+<meta property="og:url" content="https://arjundineshmenon.com/" />
+<meta property="og:image" content="https://arjundineshmenon.com/og.png" />
+<meta name="twitter:card" content="summary_large_image" />
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230B0E23'/%3E%3Cpath d='M5 11h22M8 11v14M24 11v14M10.5 16h11' stroke='%23FF4D2E' stroke-width='2.4' stroke-linecap='round'/%3E%3C/svg%3E" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@600;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" />
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Arjun Dinesh Menon",
+  "jobTitle": "Aspiring Cloud & DevOps Engineer",
+  "email": "mailto:arjundineshmenon1@gmail.com",
+  "telephone": "+91-8129108321",
+  "address": { "@type": "PostalAddress", "addressLocality": "Coimbatore", "addressRegion": "Tamil Nadu", "addressCountry": "IN" },
+  "alumniOf": { "@type": "CollegeOrUniversity", "name": "KGiSL Institute of Technology" },
+  "knowsAbout": ["Amazon Web Services", "Cloud Infrastructure", "DevOps", "Kubernetes", "Terraform", "Linux", "Python"],
+  "sameAs": ["https://github.com/ArjunDineshMenon", "https://linkedin.com/in/arjundineshmenon"]
+}
+</script>
+
+<link rel="stylesheet" href="/src/styles/main.css" />
+</head>
+
+<body>
+<a class="skip" href="#about">Skip to content</a>
+
+<!-- ══ PRELOADER ═══════════════════════════════════════════════════════ -->
+<div class="preloader" id="preloader" role="status" aria-live="polite" aria-label="Loading">
+  <div class="preloader__inner">
+    <div class="preloader__mark" aria-hidden="true">
+      <svg viewBox="0 0 120 90" fill="none">
+        <path class="pl-beam" d="M6 26 H114" />
+        <path class="pl-beam2" d="M14 38 H106" />
+        <path class="pl-post" d="M30 26 V84" />
+        <path class="pl-post" d="M90 26 V84" />
+      </svg>
+    </div>
+    <div class="preloader__meter"><span class="preloader__fill" id="plFill"></span></div>
+    <p class="preloader__label mono">
+      <span id="plPct">00</span><span class="dim">%</span>
+      <span class="preloader__sep">/</span>
+      <span class="dim" id="plStage">compiling shaders</span>
+    </p>
+  </div>
+</div>
+
+<!-- ══ WEBGL CANVAS ════════════════════════════════════════════════════ -->
+<canvas id="gl" aria-hidden="true"></canvas>
+<div class="grain" aria-hidden="true"></div>
+<div class="vignette" aria-hidden="true"></div>
+
+<!-- ══ CURSOR ══════════════════════════════════════════════════════════ -->
+<div class="cursor" id="cursor" aria-hidden="true"><span class="cursor__dot"></span><span class="cursor__ring"></span></div>
+
+<!-- ══ NAV ═════════════════════════════════════════════════════════════ -->
+<header class="nav" id="nav">
+  <a class="nav__brand" href="#hero" aria-label="Arjun Dinesh Menon, back to top">
+    <span class="nav__glyph" aria-hidden="true">雲</span>
+    <span class="nav__name">arjun<span class="accent">.</span>menon</span>
+  </a>
+  <nav class="nav__links" aria-label="Sections">
+    <a href="#about" data-nav>About</a>
+    <a href="#skills" data-nav>Skills</a>
+    <a href="#work" data-nav>Work</a>
+    <a href="#path" data-nav>Path</a>
+    <a href="#record" data-nav>Record</a>
+  </nav>
+  <a class="nav__cta" href="#contact">
+    <span>Get in touch</span>
+    <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 8h11M9 4l4 4-4 4" /></svg>
+  </a>
+  <button class="nav__burger" id="burger" aria-label="Open menu" aria-expanded="false" aria-controls="drawer">
+    <span></span><span></span>
+  </button>
+</header>
+
+<div class="drawer" id="drawer" aria-hidden="true">
+  <nav class="drawer__links" aria-label="Sections">
+    <a href="#about"><span class="mono">01</span> About</a>
+    <a href="#skills"><span class="mono">02</span> Skills</a>
+    <a href="#work"><span class="mono">03</span> Work</a>
+    <a href="#path"><span class="mono">04</span> Path</a>
+    <a href="#record"><span class="mono">05</span> Record</a>
+    <a href="#contact"><span class="mono">06</span> Contact</a>
+  </nav>
+</div>
+
+<!-- ══ SCROLL PROGRESS RAIL ════════════════════════════════════════════ -->
+<div class="rail" aria-hidden="true">
+  <span class="rail__line"><span class="rail__fill" id="railFill"></span></span>
+  <span class="rail__label mono" id="railLabel">01</span>
+</div>
+
+<main id="main">
+
+<!-- ══ 00 HERO ═════════════════════════════════════════════════════════ -->
+<section class="s hero" id="hero" data-scene="torii">
+  <div class="hero__grid">
+    <p class="kicker" data-rise>
+      <span class="kicker__jp">雲</span>
+      <span class="kicker__rule" aria-hidden="true"></span>
+      <span>Cloud &amp; DevOps</span>
+    </p>
+
+    <h1 class="hero__name" data-split>Arjun Dinesh Menon</h1>
+
+    <p class="hero__line display" data-rise data-delay="0.1">
+      Nothing I build<br /> stops at <em>localhost</em>.
+    </p>
+
+    <p class="hero__sub" data-rise data-delay="0.2">
+      First-year AI &amp; Data Science student at KGiSL Institute of Technology.
+      I learn cloud infrastructure by putting it on real AWS, then keep it running.
+      The plan ends in Japan.
+    </p>
+
+    <div class="hero__actions" data-rise data-delay="0.3">
+      <a class="btn btn--solid" href="#work"><span>See the work</span></a>
+      <a class="btn btn--ghost" href="#contact"><span>Get in touch</span></a>
+    </div>
+
+    <ul class="hero__meta mono" data-rise data-delay="0.4">
+      <li><span class="dim">Based</span> Coimbatore, IN</li>
+      <li><span class="dim">Target</span> Tokyo, JP</li>
+      <li><span class="dim">Status</span> <span class="live"><i aria-hidden="true"></i>Open to internships</span></li>
+    </ul>
+  </div>
+
+  <div class="hero__scroll mono" aria-hidden="true">
+    <span>scroll</span>
+    <span class="hero__scrollbar"><i></i></span>
+  </div>
+</section>
+
+<!-- ══ 01 ABOUT ════════════════════════════════════════════════════════ -->
+<section class="s about" id="about" data-scene="sea">
+  <div class="wrap">
+    <header class="shead">
+      <p class="shead__idx mono" data-rise>01 <span class="dim">/ about</span> <span class="jp">自己紹介</span></p>
+      <h2 class="shead__title display" data-split>A plan, not a guess.</h2>
+    </header>
+
+    <div class="about__body">
+      <div class="about__prose">
+        <p data-rise>
+          I'm in my first year of B.Tech in AI &amp; Data Science at KGiSL Institute of Technology in
+          Coimbatore, on the Anna University curriculum, graduating in 2029. My vertical in the
+          School of Innovation is Cloud &amp; DevOps, which is also what I want to do for a living.
+        </p>
+        <p data-rise data-delay="0.08">
+          Long term I'm aiming for a role in Japan straight after graduation, then a Masters through
+          the MEXT scholarship at somewhere like JAIST or the University of Aizu. That is a specific
+          plan with specific requirements, so I work on it every day rather than someday.
+        </p>
+        <p data-rise data-delay="0.16">
+          I study Japanese alongside the technical work. And every project I build goes onto real
+          infrastructure. Configuring an IAM policy for a bucket that strangers can actually reach
+          teaches more than any tutorial I have finished.
+        </p>
+      </div>
+
+      <div class="about__facts" data-stagger>
+        <div class="fact" data-fact>
+          <p class="fact__k mono">Studying</p>
+          <p class="fact__v">B.Tech <span class="dim">·</span> AI &amp; Data Science</p>
+        </div>
+        <div class="fact" data-fact>
+          <p class="fact__k mono">Institution</p>
+          <p class="fact__v">KGiSL Institute of Technology</p>
+          <p class="fact__n mono">Anna University · Batch of 2029</p>
+        </div>
+        <div class="fact" data-fact>
+          <p class="fact__k mono">Focus</p>
+          <p class="fact__v">Cloud Infrastructure &amp; DevOps</p>
+        </div>
+        <div class="fact" data-fact>
+          <p class="fact__k mono">Core stack</p>
+          <p class="fact__v">AWS <span class="dim">·</span> Kubernetes <span class="dim">·</span> Terraform</p>
+        </div>
+        <div class="fact fact--hero" data-fact>
+          <p class="fact__k mono">Working in Japan by</p>
+          <p class="fact__v fact__big" data-count="2032">2032</p>
+          <p class="fact__n mono">MEXT scholarship · JLPT N3 target</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 02 SKILLS ═══════════════════════════════════════════════════════ -->
+<section class="s skills" id="skills" data-scene="field">
+  <div class="wrap">
+    <header class="shead">
+      <p class="shead__idx mono" data-rise>02 <span class="dim">/ skills</span> <span class="jp">技術</span></p>
+      <h2 class="shead__title display" data-split>What I use, and what I'm still learning.</h2>
+      <p class="shead__note" data-rise data-delay="0.1">
+        Two states only. Something moves to <em>using</em> when I have built with it and could do it
+        again without the tab open. Everything else stays honest.
+      </p>
+    </header>
+
+    <p class="skills__hint mono" data-rise>
+      <span class="dot dot--on" aria-hidden="true"></span> using
+      <span class="skills__hintsep" aria-hidden="true"></span>
+      <span class="dot dot--off" aria-hidden="true"></span> learning
+      <span class="skills__hintsep" aria-hidden="true"></span>
+      <span class="dim">drag the field to turn it</span>
+    </p>
+
+    <div class="skills__grid" data-stagger>
+      <article class="skgroup" data-skgroup>
+        <h3 class="skgroup__h">Cloud &amp; Infrastructure</h3>
+        <ul class="skgroup__list">
+          <li><button class="chip is-on"  data-skill="s3"         type="button">AWS S3</button></li>
+          <li><button class="chip is-on"  data-skill="ec2"        type="button">AWS EC2</button></li>
+          <li><button class="chip is-on"  data-skill="iam"        type="button">AWS IAM</button></li>
+          <li><button class="chip is-on"  data-skill="cloudfront" type="button">AWS CloudFront</button></li>
+          <li><button class="chip"        data-skill="lambda"     type="button">AWS Lambda</button></li>
+          <li><button class="chip"        data-skill="vpc"        type="button">AWS VPC</button></li>
+          <li><button class="chip"        data-skill="terraform"  type="button">Terraform</button></li>
+        </ul>
+      </article>
+
+      <article class="skgroup" data-skgroup>
+        <h3 class="skgroup__h">DevOps &amp; Tooling</h3>
+        <ul class="skgroup__list">
+          <li><button class="chip is-on" data-skill="git"     type="button">Git</button></li>
+          <li><button class="chip is-on" data-skill="github"  type="button">GitHub</button></li>
+          <li><button class="chip is-on" data-skill="linux"   type="button">Linux CLI</button></li>
+          <li><button class="chip"       data-skill="docker"  type="button">Docker</button></li>
+          <li><button class="chip"       data-skill="k8s"     type="button">Kubernetes</button></li>
+          <li><button class="chip"       data-skill="actions" type="button">GitHub Actions</button></li>
+        </ul>
+      </article>
+
+      <article class="skgroup" data-skgroup>
+        <h3 class="skgroup__h">Languages</h3>
+        <ul class="skgroup__list">
+          <li><button class="chip is-on" data-skill="python" type="button">Python</button></li>
+          <li><button class="chip is-on" data-skill="html"   type="button">HTML / CSS</button></li>
+          <li><button class="chip"       data-skill="bash"   type="button">Bash</button></li>
+          <li><button class="chip"       data-skill="yaml"   type="button">YAML</button></li>
+        </ul>
+      </article>
+
+      <article class="skgroup" data-skgroup>
+        <h3 class="skgroup__h">Japanese <span class="jp dim">日本語</span></h3>
+        <ul class="skgroup__list">
+          <li><button class="chip is-on" data-skill="hiragana" type="button">Hiragana</button></li>
+          <li><button class="chip is-on" data-skill="katakana" type="button">Katakana</button></li>
+          <li><button class="chip"       data-skill="n5"       type="button">JLPT N5</button></li>
+          <li><button class="chip"       data-skill="n4"       type="button">JLPT N4</button></li>
+        </ul>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 03 WORK ═════════════════════════════════════════════════════════ -->
+<section class="s work" id="work" data-scene="monoliths">
+  <div class="wrap">
+    <header class="shead">
+      <p class="shead__idx mono" data-rise>03 <span class="dim">/ work</span> <span class="jp">制作</span></p>
+      <h2 class="shead__title display" data-split>Built, deployed, still up.</h2>
+    </header>
+
+    <ol class="work__list">
+      <li class="proj" data-proj data-tint="0">
+        <div class="proj__num mono" aria-hidden="true">01</div>
+        <div class="proj__body">
+          <p class="proj__status mono is-live"><i aria-hidden="true"></i>Live</p>
+          <h3 class="proj__h display">Personal Portfolio on AWS S3</h3>
+          <p class="proj__p">
+            A static site hosted straight out of an S3 bucket. I wrote the IAM bucket policy, opened
+            public access on purpose rather than by accident, set a billing alarm so a mistake stays
+            cheap, and turned on MFA before any of it. My first deploy onto production AWS.
+          </p>
+          <ul class="proj__tech mono">
+            <li>AWS S3</li><li>IAM</li><li>HTML / CSS</li><li>Git</li>
+          </ul>
+          <div class="proj__links">
+            <a class="ilink" href="https://github.com/ArjunDineshMenon" target="_blank" rel="noopener">
+              <span>Repository</span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 12L12 4M12 4H6M12 4v6"/></svg>
+            </a>
+          </div>
+        </div>
+      </li>
+
+      <li class="proj" data-proj data-tint="1">
+        <div class="proj__num mono" aria-hidden="true">02</div>
+        <div class="proj__body">
+          <p class="proj__status mono is-wip"><i aria-hidden="true"></i>In progress</p>
+          <h3 class="proj__h display">Portfolio V2 · CloudFront + HTTPS</h3>
+          <p class="proj__p">
+            Putting a CloudFront distribution in front of the S3 origin, so the site arrives over
+            HTTPS from an edge near the visitor instead of one region. Full responsive rebuild
+            alongside it. This is the piece I am on right now.
+          </p>
+          <ul class="proj__tech mono">
+            <li>CloudFront</li><li>S3</li><li>HTTPS</li><li>DNS</li>
+          </ul>
+        </div>
+      </li>
+
+      <li class="proj" data-proj data-tint="2">
+        <div class="proj__num mono" aria-hidden="true">03</div>
+        <div class="proj__body">
+          <p class="proj__status mono is-concept"><i aria-hidden="true"></i>Team prototype · hackathon</p>
+          <h3 class="proj__h display">Cupola Furnace Waste-Heat Recovery</h3>
+          <p class="proj__p">
+            A sensor-to-cloud architecture for recovering and monitoring waste heat in small foundries
+            around Coimbatore. Our team designed the pipeline: sensors into AWS, an ML stage, then a
+            live dashboard for the floor. It is a design and a prototype concept, not a shipped system.
+          </p>
+          <ul class="proj__tech mono">
+            <li>AWS</li><li>Sensor pipeline</li><li>ML design</li>
+          </ul>
+        </div>
+      </li>
+    </ol>
+
+    <p class="work__more mono" data-rise>
+      <span class="dim">Next up</span> Docker containerisation · a Kubernetes deployment · a CI/CD pipeline in GitHub Actions
+    </p>
+  </div>
+</section>
+
+<!-- ══ 04 PATH ═════════════════════════════════════════════════════════ -->
+<section class="s path" id="path" data-scene="path">
+  <div class="wrap">
+    <header class="shead">
+      <p class="shead__idx mono" data-rise>04 <span class="dim">/ path</span> <span class="jp">進路</span></p>
+      <h2 class="shead__title display" data-split>Coimbatore to Tokyo, in six steps.</h2>
+      <p class="shead__note" data-rise data-delay="0.1">
+        Six years, written down where I can be held to it. Dates move. The order does not.
+      </p>
+    </header>
+
+    <ol class="tl">
+      <li class="tl__item is-now" data-mile="0">
+        <p class="tl__year mono">2026 <span class="tl__badge">now</span></p>
+        <h3 class="tl__h display">Foundation sprint</h3>
+        <p class="tl__p">AWS Cloud Practitioner. JLPT N5. First real GitHub projects. Linux and Git until they are reflex.</p>
+      </li>
+      <li class="tl__item" data-mile="1">
+        <p class="tl__year mono">2027</p>
+        <h3 class="tl__h display">Core skills</h3>
+        <p class="tl__p">AWS Solutions Architect Associate. CompTIA Security+. JLPT N4. Docker and Kubernetes for real.</p>
+      </li>
+      <li class="tl__item" data-mile="2">
+        <p class="tl__year mono">2028</p>
+        <h3 class="tl__h display">Specialise and apply</h3>
+        <p class="tl__p">CKA. JLPT N3. An internship. The MEXT application goes in, and I start writing to professors.</p>
+      </li>
+      <li class="tl__item" data-mile="3">
+        <p class="tl__year mono">2029</p>
+        <h3 class="tl__h display">Graduate</h3>
+        <p class="tl__p">B.Tech in AI &amp; Data Science, KGiSL Institute of Technology, Anna University.</p>
+      </li>
+      <li class="tl__item" data-mile="4">
+        <p class="tl__year mono">2030</p>
+        <h3 class="tl__h display">Arrive in Japan <span class="jp accent">日本</span></h3>
+        <p class="tl__p">Masters in cloud infrastructure as a MEXT scholar. JAIST or the University of Aizu.</p>
+      </li>
+      <li class="tl__item is-goal" data-mile="5">
+        <p class="tl__year mono">2032</p>
+        <h3 class="tl__h display">Working there</h3>
+        <p class="tl__p">Cloud and DevOps engineer, full time. Aiming at NTT Data, Rakuten, or CyberAgent. JLPT N1 by then.</p>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<!-- ══ 05 RECORD ═══════════════════════════════════════════════════════ -->
+<section class="s record" id="record" data-scene="record">
+  <div class="wrap">
+    <header class="shead">
+      <p class="shead__idx mono" data-rise>05 <span class="dim">/ record</span> <span class="jp">記録</span></p>
+      <h2 class="shead__title display" data-split>The paperwork.</h2>
+    </header>
+
+    <div class="record__cols">
+      <div class="record__edu">
+        <h3 class="minih mono" data-rise>Education</h3>
+        <ol class="edu">
+          <li class="edu__item" data-rise>
+            <p class="edu__when mono">2025 <span class="dim">–</span> 2029 <span class="dim">expected</span></p>
+            <h4 class="edu__h">B.Tech, Artificial Intelligence &amp; Data Science</h4>
+            <p class="edu__where">KGiSL Institute of Technology, Coimbatore <span class="dim">·</span> Anna University</p>
+            <ul class="edu__pts mono">
+              <li><b data-count="8.17">8.17</b> SGPA <span class="dim">sem 1</span></li>
+              <li><b data-count="8.52">8.52</b> SGPA <span class="dim">sem 2</span></li>
+              <li>No standing arrears</li>
+              <li>School of Innovation vertical <span class="dim">·</span> Cloud &amp; DevOps</li>
+            </ul>
+          </li>
+          <li class="edu__item" data-rise data-delay="0.08">
+            <p class="edu__when mono">2025</p>
+            <h4 class="edu__h">Senior Secondary, Class XII <span class="dim">CBSE</span></h4>
+            <p class="edu__where">B V B Vidya Mandir, Eravimangalam, Thrissur, Kerala</p>
+            <ul class="edu__pts mono">
+              <li><b data-count="80.8">80.8</b>% aggregate</li>
+              <li><b data-count="95">95</b><span class="dim">/100</span> Computer Science</li>
+            </ul>
+          </li>
+          <li class="edu__item" data-rise data-delay="0.16">
+            <p class="edu__when mono">2023</p>
+            <h4 class="edu__h">Secondary School, Class X <span class="dim">CBSE</span></h4>
+            <p class="edu__where">K M B Vidya Mandir, Mulangunnathukavu, Thrissur, Kerala</p>
+            <ul class="edu__pts mono">
+              <li><b data-count="88.4">88.4</b>% aggregate</li>
+            </ul>
+          </li>
+        </ol>
+      </div>
+
+      <div class="record__certs">
+        <h3 class="minih mono" data-rise>Certifications <span class="dim">· targets, dated</span></h3>
+        <ul class="certs" data-stagger>
+          <li class="cert" data-fact>
+            <span class="cert__badge" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2l3 6 6 .9-4.5 4.3L17.6 20 12 16.9 6.4 20l1.1-6.8L3 8.9 9 8z"/></svg></span>
+            <span class="cert__main"><b>AWS Cloud Practitioner</b><span class="cert__by mono">Amazon Web Services</span></span>
+            <span class="cert__when mono">Aug 2026</span>
+            <span class="cert__tag mono is-wip">in progress</span>
+          </li>
+          <li class="cert" data-fact>
+            <span class="cert__badge" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2l3 6 6 .9-4.5 4.3L17.6 20 12 16.9 6.4 20l1.1-6.8L3 8.9 9 8z"/></svg></span>
+            <span class="cert__main"><b>AWS Solutions Architect Associate</b><span class="cert__by mono">Amazon Web Services</span></span>
+            <span class="cert__when mono">Jan 2027</span>
+            <span class="cert__tag mono">planned</span>
+          </li>
+          <li class="cert" data-fact>
+            <span class="cert__badge" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2l3 6 6 .9-4.5 4.3L17.6 20 12 16.9 6.4 20l1.1-6.8L3 8.9 9 8z"/></svg></span>
+            <span class="cert__main"><b>CompTIA Security+</b><span class="cert__by mono">CompTIA</span></span>
+            <span class="cert__when mono">May 2027</span>
+            <span class="cert__tag mono">planned</span>
+          </li>
+          <li class="cert" data-fact>
+            <span class="cert__badge" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2l3 6 6 .9-4.5 4.3L17.6 20 12 16.9 6.4 20l1.1-6.8L3 8.9 9 8z"/></svg></span>
+            <span class="cert__main"><b>Certified Kubernetes Administrator</b><span class="cert__by mono">CNCF</span></span>
+            <span class="cert__when mono">2027–28</span>
+            <span class="cert__tag mono">planned</span>
+          </li>
+          <li class="cert" data-fact>
+            <span class="cert__badge" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2l3 6 6 .9-4.5 4.3L17.6 20 12 16.9 6.4 20l1.1-6.8L3 8.9 9 8z"/></svg></span>
+            <span class="cert__main"><b>JLPT N5</b><span class="cert__by mono">Japan Foundation</span></span>
+            <span class="cert__when mono">Dec 2026</span>
+            <span class="cert__tag mono">planned</span>
+          </li>
+          <li class="cert" data-fact>
+            <span class="cert__badge" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2l3 6 6 .9-4.5 4.3L17.6 20 12 16.9 6.4 20l1.1-6.8L3 8.9 9 8z"/></svg></span>
+            <span class="cert__main"><b>JLPT N3</b><span class="cert__by mono">Japan Foundation</span></span>
+            <span class="cert__when mono">2027–28</span>
+            <span class="cert__tag mono">planned</span>
+          </li>
+        </ul>
+        <p class="certs__note mono" data-rise>Nothing here is claimed as earned. Each one moves up with its real date when it is.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 06 CONTACT ══════════════════════════════════════════════════════ -->
+<section class="s contact" id="contact" data-scene="horizon">
+  <div class="wrap">
+    <header class="shead shead--c">
+      <p class="shead__idx mono" data-rise>06 <span class="dim">/ contact</span> <span class="jp">連絡</span></p>
+      <h2 class="shead__title display" data-split>Open to internships.</h2>
+      <p class="shead__note" data-rise data-delay="0.1">
+        Internships, cloud projects worth building together, or just other engineers walking a
+        similar road. My inbox is quiet and I answer everything.
+      </p>
+    </header>
+
+    <div class="contact__cols">
+      <form class="cform" id="cform" novalidate>
+        <div class="field">
+          <label for="fname" class="mono">Your name</label>
+          <input id="fname" name="name" type="text" autocomplete="name" required placeholder="Who is writing" />
+        </div>
+        <div class="field">
+          <label for="femail" class="mono">Email</label>
+          <input id="femail" name="email" type="email" autocomplete="email" required placeholder="where I reply" />
+        </div>
+        <div class="field">
+          <label for="fmsg" class="mono">Message</label>
+          <textarea id="fmsg" name="message" rows="4" required placeholder="The short version is fine"></textarea>
+        </div>
+        <button class="btn btn--solid btn--wide" type="submit"><span>Send it</span></button>
+        <p class="cform__note mono" id="cformNote">This opens your own email app with the message ready. Nothing is stored here.</p>
+      </form>
+
+      <div class="contact__direct">
+        <a class="dlink" href="mailto:arjundineshmenon1@gmail.com" data-fact>
+          <span class="dlink__k mono">Email</span>
+          <span class="dlink__v">arjundineshmenon1@gmail.com</span>
+          <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 8h11M9 4l4 4-4 4"/></svg>
+        </a>
+        <a class="dlink" href="https://github.com/ArjunDineshMenon" target="_blank" rel="noopener" data-fact>
+          <span class="dlink__k mono">GitHub</span>
+          <span class="dlink__v">ArjunDineshMenon</span>
+          <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 8h11M9 4l4 4-4 4"/></svg>
+        </a>
+        <a class="dlink" href="https://linkedin.com/in/arjundineshmenon" target="_blank" rel="noopener" data-fact>
+          <span class="dlink__k mono">LinkedIn</span>
+          <span class="dlink__v">arjundineshmenon</span>
+          <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 8h11M9 4l4 4-4 4"/></svg>
+        </a>
+        <a class="dlink" href="tel:+918129108321" data-fact>
+          <span class="dlink__k mono">Phone</span>
+          <span class="dlink__v">+91 81291 08321</span>
+          <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 8h11M9 4l4 4-4 4"/></svg>
+        </a>
+        <p class="contact__loc mono" data-rise>Coimbatore, Tamil Nadu, India <span class="dim">· IST, UTC+5:30</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ══ FOOTER ══════════════════════════════════════════════════════════ -->
+<footer class="foot">
+  <div class="wrap foot__in">
+    <p class="foot__mark display">またね<span class="accent">.</span></p>
+    <div class="foot__meta mono">
+      <p>Arjun Dinesh Menon <span class="dim">· Coimbatore, IN</span></p>
+      <p class="dim">Built with Three.js. Deployed on AWS.</p>
+    </div>
+    <a class="foot__top" href="#hero" aria-label="Back to top">
+      <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 13V3M4 7l4-4 4 4"/></svg>
+      <span class="mono">top</span>
+    </a>
+  </div>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script type="module" src="/src/main.js"></script>
+</body>
+</html>
