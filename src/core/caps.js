@@ -3,20 +3,27 @@
    Decided once at boot, then adjusted down at runtime if frames drop.
    ══════════════════════════════════════════════════════════════════════ */
 
-function hasWebGL() {
+function detectWebGL() {
+  let gl = null;
   try {
     const c = document.createElement('canvas');
-    const gl = c.getContext('webgl2') || c.getContext('webgl');
-    if (!gl) return false;
-    // A software rasteriser will technically pass, so bail on the known ones.
+    // Three.js r169 requires WebGL 2. A WebGL 1 context cannot run the scene.
+    gl = c.getContext('webgl2');
+    if (!gl) return { available: false, software: false };
+    // Software rendering can still animate. Start with the smallest budget
+    // instead of hiding the entire world when hardware acceleration is off.
     const dbg = gl.getExtension('WEBGL_debug_renderer_info');
+    let software = false;
     if (dbg) {
       const r = String(gl.getParameter(dbg.UNMASKED_RENDERER_WEBGL) || '').toLowerCase();
-      if (r.includes('swiftshader') || r.includes('llvmpipe') || r.includes('software')) return false;
+      software = /swiftshader|llvmpipe|software/.test(r);
     }
-    return true;
+    return { available: true, software };
   } catch {
-    return false;
+    return { available: false, software: false };
+  } finally {
+    // The probe is separate from the renderer's canvas; release its resources.
+    gl?.getExtension('WEBGL_lose_context')?.loseContext();
   }
 }
 
@@ -32,12 +39,13 @@ function pickTier() {
 }
 
 const reduced = matchMedia('(prefers-reduced-motion: reduce)');
+const webgl = detectWebGL();
 
 export const caps = {
-  webgl: hasWebGL(),
+  webgl: webgl.available,
   reduced: reduced.matches,
   touch: matchMedia('(hover: none), (pointer: coarse)').matches,
-  tier: pickTier(),
+  tier: webgl.software ? 1 : pickTier(),
   dpr: 1,
 
   /* per-tier budgets, read by the world modules */
