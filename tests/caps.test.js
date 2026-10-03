@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 
-async function withDevice({ renderer = 'Intel UHD Graphics', webgl2 = true, reduced = false, debug = true }, check) {
+async function withDevice({ renderer = 'Intel UHD Graphics', webgl2 = true, reduced = false, debug = true, preference = null, query = '', storageBlocked = false }, check) {
   let released = false;
   const requestedContexts = [];
   const gl = {
@@ -13,7 +13,7 @@ async function withDevice({ renderer = 'Intel UHD Graphics', webgl2 = true, redu
     getParameter() { return renderer; },
   };
   const globals = {
-    document: { createElement: () => ({ getContext(name) {
+    document: { documentElement: { dataset: {} }, createElement: () => ({ getContext(name) {
       requestedContexts.push(name);
       return webgl2 ? gl : null;
     } }) },
@@ -22,6 +22,11 @@ async function withDevice({ renderer = 'Intel UHD Graphics', webgl2 = true, redu
     innerWidth: 1440,
     innerHeight: 900,
     devicePixelRatio: 2,
+    location: { href: `https://example.com/Portfolio/${query}` },
+    localStorage: { getItem() {
+      if (storageBlocked) throw new Error('Storage blocked');
+      return preference;
+    } },
   };
   const previous = new Map();
   for (const [name, value] of Object.entries(globals)) {
@@ -29,7 +34,7 @@ async function withDevice({ renderer = 'Intel UHD Graphics', webgl2 = true, redu
     Object.defineProperty(globalThis, name, { value, configurable: true });
   }
   try {
-    const { caps } = await import(`../src/core/caps.js?device=${encodeURIComponent(JSON.stringify({ renderer, webgl2, reduced, debug }))}`);
+    const { caps } = await import(`../src/core/caps.js?device=${encodeURIComponent(JSON.stringify({ renderer, webgl2, reduced, debug, preference, query, storageBlocked }))}`);
     await check(caps);
     assert.deepEqual(requestedContexts, ['webgl2']);
     assert.equal(released, webgl2);
@@ -74,4 +79,27 @@ test('software rendering still respects the reduced motion preference', async ()
     assert.equal(caps.webgl, true);
     assert.equal(caps.reduced, true);
   });
+});
+
+test('explicitly enabling animations overrides the device reduced-motion default', async () => {
+  await withDevice({ reduced: true, preference: 'full' }, caps => {
+    assert.equal(caps.reduced, false);
+    assert.equal(document.documentElement.dataset.motion, 'full');
+  });
+});
+
+test('explicitly pausing animations also works on devices with motion enabled', async () => {
+  await withDevice({ preference: 'reduced' }, caps => assert.equal(caps.reduced, true));
+});
+
+test('the shareable animation link works when browser storage is blocked', async () => {
+  await withDevice({ reduced: true, storageBlocked: true, query: '?motion=full' }, caps => assert.equal(caps.reduced, false));
+});
+
+test('the URL choice takes precedence over a previous saved choice', async () => {
+  await withDevice({ preference: 'reduced', query: '?motion=full' }, caps => assert.equal(caps.reduced, false));
+});
+
+test('blocked storage and invalid URL preferences retain the accessible device default', async () => {
+  await withDevice({ reduced: true, storageBlocked: true, query: '?motion=invalid' }, caps => assert.equal(caps.reduced, true));
 });

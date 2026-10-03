@@ -16,6 +16,8 @@
 
   .nav__links, .nav__cta { display: none; }
   .nav__burger { display: block; }
+  .nav { gap: 0.5rem; }
+  .motion-toggle { padding: 0.5rem; font-size: 0.55rem; }
 
   .rail { display: none; }
 
@@ -31,8 +33,6 @@
     padding: 1.4rem 1.25rem 1.6rem;
     margin-inline: calc(-1 * 0.25rem);
     background: linear-gradient(170deg, rgba(6,8,26,0.62) 0%, rgba(6,8,26,0.34) 100%);
-    -webkit-backdrop-filter: blur(3px);
-    backdrop-filter: blur(3px);
     border-radius: 6px;
   }
 
@@ -66,17 +66,31 @@
 
 /* ── reduced motion: the site becomes a still, composed page ─── */
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
+  html:not([data-motion='full']) *,
+  html:not([data-motion='full']) *::before,
+  html:not([data-motion='full']) *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
-  .grain { animation: none; }
-  .cursor { display: none; }
-  .hero__scrollbar i { display: none; }
-  #gl { opacity: 1; }
+  html:not([data-motion='full']) .grain { animation: none; }
+  html:not([data-motion='full']) .cursor { display: none; }
+  html:not([data-motion='full']) .hero__scrollbar i { display: none; }
+  html:not([data-motion='full']) #gl { opacity: 1; }
 }
+
+html[data-motion='reduced'] *,
+html[data-motion='reduced'] *::before,
+html[data-motion='reduced'] *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  scroll-behavior: auto !important;
+}
+html[data-motion='reduced'] .grain { animation: none; }
+html[data-motion='reduced'] .cursor,
+html[data-motion='reduced'] .hero__scrollbar i { display: none; }
 
 /* ── forced colors / high contrast ───────────────────────────── */
 @media (forced-colors: active) {

@@ -135,6 +135,18 @@
 .nav__burger[aria-expanded='true'] span:nth-child(2) { transform: translateY(-3px) rotate(-45deg); background: var(--shu); }
 
 /* ── DRAWER (mobile) ─────────────────────────────────────────── */
+.motion-toggle {
+  flex-shrink: 0;
+  padding: 0.55rem 0.7rem;
+  border: 1px solid var(--hair);
+  border-radius: 999px;
+  font-family: var(--f-mono);
+  font-size: 0.6rem;
+  color: var(--bone);
+}
+.motion-toggle:hover { border-color: var(--shu); }
+.motion-toggle[hidden] { display: none; }
+
 .drawer {
   position: fixed; inset: 0; z-index: var(--z-drawer);
   display: grid; place-items: center;

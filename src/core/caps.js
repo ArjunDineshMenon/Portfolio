@@ -41,9 +41,26 @@ function pickTier() {
 const reduced = matchMedia('(prefers-reduced-motion: reduce)');
 const webgl = detectWebGL();
 
+function readMotionPreference() {
+  try {
+    const value = new URL(location.href).searchParams.get('motion');
+    if (value === 'full' || value === 'reduced') return value;
+  } catch { /* URL access may be restricted in embedded browsers. */ }
+  try {
+    const value = localStorage.getItem('kumo-motion');
+    if (value === 'full' || value === 'reduced') return value;
+  } catch { /* The control also works when storage is blocked. */ }
+  return 'system';
+}
+
+function wantsReducedMotion(systemReduced = reduced.matches) {
+  const preference = readMotionPreference();
+  return preference === 'system' ? systemReduced : preference === 'reduced';
+}
+
 export const caps = {
   webgl: webgl.available,
-  reduced: reduced.matches,
+  reduced: wantsReducedMotion(),
   touch: matchMedia('(hover: none), (pointer: coarse)').matches,
   tier: webgl.software ? 1 : pickTier(),
   dpr: 1,
@@ -73,6 +90,17 @@ export const caps = {
 };
 
 caps.dpr = Math.min(devicePixelRatio || 1, caps.maxDpr);
+document.documentElement.dataset.motion = caps.reduced ? 'reduced' : 'full';
+
+/** A visitor's explicit choice takes precedence over the device default. */
+export function setMotionPreference(value) {
+  if (value !== 'full' && value !== 'reduced') return;
+  try { localStorage.setItem('kumo-motion', value); } catch { /* Use the URL below. */ }
+  const url = new URL(location.href);
+  url.searchParams.set('motion', value);
+  history.replaceState(null, '', url);
+  location.reload();
+}
 
 /** Called by the perf watchdog when the frame budget is being missed. */
 export function downgrade() {
@@ -85,8 +113,10 @@ export function downgrade() {
 /** The visitor can flip reduced-motion mid-session. */
 export function onReducedChange(fn) {
   const h = (e) => {
-    caps.reduced = e.matches;
-    fn(e.matches);
+    const next = wantsReducedMotion(e.matches);
+    if (next === caps.reduced) return;
+    caps.reduced = next;
+    fn(next);
   };
   if (reduced.addEventListener) reduced.addEventListener('change', h);
   else reduced.addListener(h);

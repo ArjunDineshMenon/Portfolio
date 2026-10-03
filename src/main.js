@@ -25,6 +25,7 @@ import { initReveal, ScrollTrigger } from './ui/reveal.js';
 import { initChrome, toast } from './ui/chrome.js';
 import { initCursor } from './ui/cursor.js';
 import { initForm } from './ui/form.js';
+import { initMotionControl } from './ui/motion.js';
 import { readSkills, initBridge } from './ui/bridge.js';
 
 /* the flight is designed to start at the gate, so a restored scroll
@@ -54,6 +55,7 @@ async function boot() {
   const cursor = initCursor();
   const reveal = initReveal();
   initForm();
+  initMotionControl();
 
   startTicker();
   pre.set(0.2, 'laying out the page');

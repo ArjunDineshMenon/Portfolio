@@ -215,7 +215,9 @@ export function createTorii() {
       uTime: { value: 0 },
       uForm: { value: 0 },
       uDisperse: { value: 0 },
-      uSize: { value: caps.tier >= 3 ? 1.0 : 1.35 },
+      // Fewer particles need larger sprites to keep the gate's silhouette
+      // visible on the lowest tier, which also has no bloom pass.
+      uSize: { value: caps.tier >= 3 ? 1.0 : caps.tier === 2 ? 1.35 : 2.2 },
       uDpr: { value: caps.dpr },
       uOpacity: { value: 0.62 },
       uPointer: { value: new Vector3(0, 3.2, 400) },
